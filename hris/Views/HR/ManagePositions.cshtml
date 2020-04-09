@@ -1,0 +1,65 @@
+﻿@model IEnumerable<coursework.Models.Position>
+
+@{
+    ViewBag.Title = "ManagePositions";
+}
+
+<h2>ManagePositions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddPosition")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salary)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditPosition", new { id = item.id }) |
+                @Html.ActionLink("Delete", "DeletePosition", new { id = item.id }) |
+                <input id="myBtn" type="button" value="Show skills" class="btn btn-default" />
+            </td>
+        </tr>
+        <tr id="partialView" class="@item.id"></tr>
+    }
+
+</table>
+<script>
+    $('#myBtn').click(function () {
+        var $partialView = $('#partialView');
+        if ($partialView.is(':empty')) {
+            $.ajax({
+                url: '/Hr/RequiredSkills/' + $partialView.class,
+                datatype: "html",
+                type: "GET",
+                cache: false,
+                success: function (result) {
+                    $partialView.html(result);
+                },
+                error: function (xhr, status, error) {
+                    const errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert(`error - ${errorMessage}`);
+                }
+            });
+        }
+        else {
+            $partialView.empty();
+        }
+        return false;
+    });
+</script>

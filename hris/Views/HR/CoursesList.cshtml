@@ -1,0 +1,38 @@
+﻿@model coursework.Models.EmployeeCourses
+
+@{
+    ViewBag.Title = "Assign";
+}
+
+<h2>Assign</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddEmployee")
+</p>
+<table class="table">
+    @Html.HiddenFor(m => m.EmpId);
+
+    @foreach (var item in Model.Courses)
+    {
+        <tr id="assignedCourse">
+            @Html.HiddenFor(modelItem => item.id)
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <div class="col-md-2">
+                    <input id="button" type="button" value="Assign this course" class="btn btn-default" onclick="location.href = '@Url.Action("Assign", "Hr", new {empId = Model.EmpId, courseId = item.id})'"/>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    document.getElementById('button').addEventListener('click',function() {
+        document.getElementById('assignedCourse').style.color = 'blueviolet';
+    })
+</script>

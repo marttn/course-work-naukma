@@ -1,0 +1,75 @@
+﻿@model IEnumerable<coursework.Models.Employee>
+
+@{
+    ViewBag.Title = "View";
+}
+
+    <h2>Employees List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddEmployee")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HiringDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HousesPerWeek)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PositionId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patronymic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Birthday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HiringDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HousesPerWeek)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PositionId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditEmployee", new { id = item.id }) |
+            @Html.ActionLink("Delete", "DeleteEmployee", new { id = item.id })|
+            @Html.ActionLink("Assign course", "CoursesList", new { id = item.id })
+        </td>
+    </tr>
+}
+
+</table>
