@@ -1,0 +1,34 @@
+﻿@model System.Collections.Generic.IEnumerable<coursework.Models.Project>
+@{
+    Layout = "_LayoutKB.cshtml";
+}
+<div style="padding: 10px">
+    <h2>Projects</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

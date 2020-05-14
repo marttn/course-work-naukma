@@ -5,6 +5,7 @@ using System.Web;
 using coursework.Interfaces.Repos;
 using coursework.Interfaces.Services;
 using coursework.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace coursework.Services
 {
@@ -43,32 +44,44 @@ namespace coursework.Services
 
         public IEnumerable<EmpDayOff> DaysOffList()
         {
-            return _employeeRepository.DaysOff();
+            return _employeeRepository.DaysOffList();
         }
 
-        public DaysOff GetVacation(int empId)
+        public RemainingDaysOff RemainingDaysOff(int empId)
         {
-            return _employeeRepository.GetVacation(empId);
+            return _employeeRepository.RemainingDaysOff(empId);
         }
 
-        public void UseVacation(int empId, short days)
+        public void AddVacation(int empId)
         {
-            _employeeRepository.UseVacation(empId, days);
+            _employeeRepository.AddVacation(empId);
         }
 
-        public DaysOff GetSickLeave(int empId)
+        public IEnumerable<DaysOff> DaysOff(int empId)
         {
-            return _employeeRepository.GetSickLeave(empId);
+            return _employeeRepository.DaysOff(empId);
         }
 
-        public void UseSickLeave(int empId, short days)
+        public DaysOff GetDayOff(int id)
         {
-            _employeeRepository.UseSickLeave(empId, days);
+            return _employeeRepository.GetDayOff(id);
         }
+
+        public void UseDayOff(DaysOff model)
+        {
+            _employeeRepository.UseDayOff(model);
+        }
+
+
 
         public void ApproveDayOff(int id)
         {
             _employeeRepository.ApproveDayOff(id);
+        }
+
+        public IEnumerable<TimeTracker> UserTimeTracker(int id)
+        {
+            return _employeeRepository.UserTimeTracker(id);
         }
 
         public double TimeSpentForProject(int projectId, DateTime? @from, DateTime? to)
@@ -99,6 +112,11 @@ namespace coursework.Services
         public void DeleteDayOff(int id)
         {
             _employeeRepository.DeleteDayOff(id);
+        }
+
+        public IEnumerable<string> IdentityUserRoles(string id)
+        {
+            return _employeeRepository.IdentityUserRoles(id);
         }
     }
 }

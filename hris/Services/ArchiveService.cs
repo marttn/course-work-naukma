@@ -31,9 +31,9 @@ namespace coursework.Services
             return _archiveRepository.GetCourseDocs(courseId);
         }
 
-        public void Create(Archive archive)
+        public void Create(HttpPostedFileBase file, Archive archive)
         {
-            _archiveRepository.Create(archive);
+            _archiveRepository.Create(file, archive);
         }
 
         public void Update(Archive archive)
@@ -44,6 +44,10 @@ namespace coursework.Services
         public void Delete(int id)
         {
             _archiveRepository.Delete(id);
+        }
+        public void DeletePreviousPhotos(int id)
+        {
+            _archiveRepository.DeletePreviousPhotos(id);
         }
     }
 }

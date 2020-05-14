@@ -1,79 +1,84 @@
 ﻿@model coursework.Models.Employee
-
-<div class="row">
-    <div class="col-md-4">
+@Html.Partial("_SideNavPartial")
+<div id="main">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    <div class="row">
         <div class="col-md-4">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-horizontal col-md-8">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <h4>Personal info</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Patronymic, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Patronymic, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Patronymic, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <span class="col-md-5">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </span>
+                    @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <span class="col-md-4">
+                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                    </span>
+                </div>
+
+                @Html.HiddenFor(model => model.HiringDate)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HousesPerWeek, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.HousesPerWeek, new List<SelectListItem>
+                        {
+                            new SelectListItem {Value = "20", Text = "20"},
+                            new SelectListItem {Value = "25", Text = "25"},
+                            new SelectListItem {Value = "30", Text = "30"},
+                            new SelectListItem {Value = "35", Text = "35"},
+                            new SelectListItem {Value = "40", Text = "40"}
+                        }, new { @style = "width: 7vw;height: 25px;" })
+                    </div>
+                </div>
+                @Html.Label("Position")
+                @Html.DropDownListFor(m => m.PositionId, (SelectList)ViewBag.Positions, new
+                {
+                    @class = "form-control"
+                });
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            }
         </div>
     </div>
-    <div class="form-horizontal col-md-8">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <h4>Personal info</h4>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Patronymic, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Patronymic, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Patronymic, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.TelNum, htmlAttributes: new { @class = "control-label col-md-2" })
-                <span class="col-md-5">
-                    @Html.EditorFor(model => model.TelNum, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TelNum, "", new { @class = "text-danger" })
-                </span>
-                @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-1" })
-                <span class="col-md-4">
-                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
-                </span>
-            </div>
-
-            @Html.HiddenFor(model => model.HiringDate)
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.HousesPerWeek, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.HousesPerWeek, new List<SelectListItem>
-                    {
-                        new SelectListItem {Value = "20", Text = "20"},
-                        new SelectListItem {Value = "25", Text = "25"},
-                        new SelectListItem {Value = "30", Text = "30"},
-                        new SelectListItem {Value = "35", Text = "35"},
-                        new SelectListItem {Value = "40", Text = "40"}
-                    }, new { @style = "width: 7vw;height: 25px;" })
-                </div>
-            </div>
-            @Html.HiddenFor(model => model.PositionId)
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        }
-    </div>
 </div>
-

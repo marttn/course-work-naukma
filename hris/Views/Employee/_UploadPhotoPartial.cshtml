@@ -1,0 +1,8 @@
+﻿@model coursework.Models.Archive
+
+@using (Html.BeginForm("UploadPhoto","Employee", FormMethod.Post, new { enctype ="multipart/form-data" }))  
+{   
+    @Html.HiddenFor(m=>m.OwnerId)
+    <input type="file" name="ImageData" id="ImageData" onchange="fileCheck(this);" />  
+    <input type="submit" value="Upload" />
+}  

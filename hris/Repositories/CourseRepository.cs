@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Data.SqlClient;
 using System.Linq;
 using coursework.Interfaces.Repos;
 using coursework.Models;
@@ -29,7 +31,11 @@ namespace coursework.Repositories
         public void UpdateOnboardingCourse(OnboardingCourse onboardingCourse)
         {
             if (onboardingCourse == null) return;
-            Context.OnboardingCourses.AddOrUpdate(onboardingCourse);
+            var entry = GetCourse(onboardingCourse.Id);
+            if (entry == null) return;
+            entry.Name = onboardingCourse.Name; 
+            entry.Description = onboardingCourse.Description;
+            Context.Entry(entry).State = EntityState.Modified; 
             SaveChanges();
         }
 
@@ -61,7 +67,11 @@ namespace coursework.Repositories
         public void UpdateCourseModule(CourseModule courseModule)
         {
             if (courseModule == null) return;
-            Context.CourseModules.AddOrUpdate(courseModule);
+            var entry = GetModule(courseModule.Id);
+            if (entry == null) return;
+            entry.Name = courseModule.Name;
+            entry.Description = courseModule.Description;
+            Context.Entry(entry).State = EntityState.Modified;
             SaveChanges();
         }
 
@@ -75,7 +85,8 @@ namespace coursework.Repositories
 
         public IEnumerable<OnboardingCourse> GetAssignedCourses(int empId)
         {
-            return Query<OnboardingCourse>("exec GetAssignedCourses @p1", empId);
+            var param1 = new SqlParameter("@empId", empId);
+            return Query<OnboardingCourse>("exec GetAssignedCourses @empId", param1);
         }
 
         public void CreateCourseCompletion(CourseCompletion completion)
@@ -88,13 +99,16 @@ namespace coursework.Repositories
         public void UpdateCourseCompletion(CourseCompletion completion)
         {
             if (completion == null) return;
-            Context.CourseCompletions.AddOrUpdate(completion);
+            var entry = Context.CourseCompletions.Find(completion.Id);
+            if (entry == null) return;
+            entry.PercentCompleted = completion.PercentCompleted;
+            Context.Entry(entry).State = EntityState.Modified;
             SaveChanges();
         }
 
         public void DeleteCourseCompletion(int empId, int courseId)
         {
-            var data = Context.CourseCompletions.FirstOrDefault(x => x.EmpId == empId && x.CourseId == courseId);
+            var data = Context.CourseCompletions.FirstOrDefault(x => x.EmployeeId == empId && x.OnboardingCourseId == courseId);
             if (data == null) return;
             Context.CourseCompletions.Remove(data);
             SaveChanges();

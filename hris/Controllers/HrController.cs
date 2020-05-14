@@ -1,34 +1,45 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 using coursework.Interfaces.Services;
 using coursework.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace coursework.Controllers
 {
+    [Authorize(Roles = "Admin, HrManager")]
     public class HrController : Controller
     {
         private readonly IEmployeeService _employeeService;
         private readonly ICourseService _courseService;
         private readonly IPositionService _positionService;
+        private readonly IProjectService _projectService;
         private readonly ISkillsService _skillsService;
+        private UserManager<Employee> _userManager { get; set; }
 
-        public HrController(IEmployeeService employeeService, ICourseService courseService, IPositionService positionService, ISkillsService skillsService)
+        public HrController(IEmployeeService employeeService, ICourseService courseService, IPositionService positionService, IProjectService projectService, ISkillsService skillsService)
         {
             _employeeService = employeeService;
             _courseService = courseService;
             _positionService = positionService;
+            _projectService = projectService;
             _skillsService = skillsService;
+            _userManager = new UserManager<Employee>(new UserStore<Employee>(new HrisDbContext()));
+
         }
 
         public ActionResult EmployeesList()
         {
             var list = _employeeService.GetEmployees();
+            list = list.Where(x => !(_userManager.IsInRole(x.Id, Enum.GetName(typeof(Roles), Roles.Admin))));
             return View(list);
         }
         public ActionResult AddEmployee()
         {
             var model = new Employee { HiringDate = DateTime.Now };
+            ViewBag.Positions = new SelectList(_positionService.GetAllPositions(), "Id", "Name");
             return View(model);
         }
 
@@ -88,13 +99,13 @@ namespace coursework.Controllers
         public ActionResult CoursesList(int id)
         {
             var courseList = _courseService.GetAllOnboardingCourses();
-            var model = new EmployeeCourses { EmpId = id, Courses = courseList };
+            var model = new EmployeeCourses { EmployeeId = id, Courses = courseList };
             return View(model);
         }
 
         public ActionResult Assign(int empId, int courseId)
         {
-            var course = new CourseCompletion { CourseId = courseId, EmpId = empId, PercentCompleted = 0 };
+            var course = new CourseCompletion { OnboardingCourseId = courseId, EmployeeId = empId, PercentCompleted = 0 };
             try
             {
                 _courseService.CreateCourseCompletion(course);
@@ -115,6 +126,12 @@ namespace coursework.Controllers
         {
             var skills = _skillsService.GetRequiredSkillsForPosition(positionId);
             return View(skills);
+        }
+
+        public ActionResult ManagePositions()
+        {
+            var model = _positionService.GetAllPositions();
+            return View(model);
         }
 
         public ActionResult EditPosition(int id)

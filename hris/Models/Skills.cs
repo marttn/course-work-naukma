@@ -1,11 +1,19 @@
-﻿namespace coursework.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace coursework.Models
 {
     public class Skills
     {
-        public int id { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
-        public  short Years { get; set; }
-        public int EmpId { get; set; }
+        [Required]
+        [Range(0.1, 100)]
+        public double Years { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
     }
 }

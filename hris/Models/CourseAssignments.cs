@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace coursework.Models
 {
-    //public class CourseAssignments
-    //{
-    //    public int EmpId { get; set; }
-    //    public int CourseId { get; set; }
-    //    public string Name { get; set; }
-    //    public string Description { get; set; }
-
-    //}
-
+    [NotMapped]
     public class EmployeeCourses
     {
-        public int EmpId { get; set; }
+        public int EmployeeId { get; set; }
         public IEnumerable<OnboardingCourse> Courses { get; set; }
     }
 }

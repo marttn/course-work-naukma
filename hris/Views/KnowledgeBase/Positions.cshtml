@@ -1,0 +1,29 @@
+﻿@model IEnumerable<coursework.Models.Position>
+@{
+    Layout = "_LayoutKB.cshtml";
+}
+<div style="padding: 10px">
+    <h2>Positions</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

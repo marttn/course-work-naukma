@@ -1,0 +1,24 @@
+﻿@using coursework.Models
+@using Microsoft.AspNet.Identity
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="@Url.Action( "EmployeesList")">Employees</a>
+    <a href="@Url.Action("CoursesList")">Courses</a>
+    <a href="@Url.Action("DaysOffList")">Days off</a>
+    <a href="@Url.Action("ManagePositions")">Positions</a>
+    <a href="@Url.Action("Index", "KnowledgeBase")">Knowledge Base</a>
+    <a href="@Url.Action("LogOff", "Account")" style="position: absolute;bottom: 10px;">Log Off</a>
+</div>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+</script>

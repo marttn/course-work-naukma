@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 using coursework.Models;
 
 namespace coursework.Interfaces.Services
@@ -8,8 +9,9 @@ namespace coursework.Interfaces.Services
         Archive GetArchive(int id);
         IEnumerable<Archive> GetEmployeeDocs(int empId);
         IEnumerable<Archive> GetCourseDocs(int courseId);
-        void Create(Archive archive);
+        void Create(HttpPostedFileBase file, Archive archive);
         void Update(Archive archive);
         void Delete(int id);
+        void DeletePreviousPhotos(int id);
     }
 }

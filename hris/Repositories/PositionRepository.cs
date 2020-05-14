@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using coursework.Interfaces.Repos;
@@ -29,7 +30,11 @@ namespace coursework.Repositories
         public void UpdatePosition(Position position)
         {
             if (position == null) return;
-            Context.Positions.AddOrUpdate(position);
+            var entry = Get(position.Id);
+            if (entry == null) return;
+            entry.Name = position.Name;
+            entry.Salary = position.Salary;
+            Context.Entry(entry).State = EntityState.Modified; 
             SaveChanges();
         }
 

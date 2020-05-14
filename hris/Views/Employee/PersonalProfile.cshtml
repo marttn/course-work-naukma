@@ -1,0 +1,68 @@
+﻿@model coursework.Models.Employee
+@Html.Partial("_SideNavPartial")
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        <h4>Employee</h4>
+        <hr />
+        <div class="col-sm-6 col-md-4">
+            @Html.Action("DisplayPhoto", new { id = Model.UserId })
+        </div>
+        <div class="form-horizontal col-sm-6 col-md-8">
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patronymic, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.Patronymic, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Phone number", new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Birthday, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.HiringDate, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.HiringDate, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.HousesPerWeek, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.HousesPerWeek, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+
+
+            @Html.Action("PositionDetails", new { id = Model.PositionId })
+
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "EditPersonalProfile", new { id = Model.UserId })
+        </p>
+    </div>

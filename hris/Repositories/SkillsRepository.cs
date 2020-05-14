@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using coursework.Interfaces.Repos;
@@ -29,7 +30,14 @@ namespace coursework.Repositories
         public void UpdateReqSkill(RequiredSkills requiredSkills)
         {
             if (requiredSkills == null) return;
-            Context.RequiredSkills.AddOrUpdate(requiredSkills);
+            var entry = GetRequiredSkill(requiredSkills.Id);
+            if (entry == null) return;
+            entry.Name = requiredSkills.Name;
+            entry.Description = requiredSkills.Description;
+            entry.MinReqYears = requiredSkills.MinReqYears;
+            entry.MaxReqYears = requiredSkills.MaxReqYears;
+            entry.PositionId = requiredSkills.PositionId;
+            Context.Entry(entry).State = EntityState.Modified;
             SaveChanges();
         }
 
@@ -48,7 +56,7 @@ namespace coursework.Repositories
 
         public IEnumerable<Skills> GetEmployeeSkills(int empId)
         {
-            return Context.Skills.Where(x => x.EmpId == empId);
+            return Context.Skills.Where(x => x.EmployeeId == empId);
         }
 
         public void CreateSkill(Skills skills)
@@ -61,7 +69,13 @@ namespace coursework.Repositories
         public void UpdateSkill(Skills skills)
         {
             if (skills == null) return;
-            Context.Skills.AddOrUpdate(skills);
+            var entry = GetSkill(skills.Id);
+            if (entry == null) return;
+            entry.Name = skills.Name;
+            entry.Description = skills.Description;
+            entry.EmployeeId = skills.EmployeeId;
+            entry.Years = skills.Years;
+            Context.Entry(entry).State = EntityState.Modified;
             SaveChanges();
         }
 

@@ -1,10 +1,18 @@
-﻿namespace coursework.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace coursework.Models
 {
     public class CourseCompletion
     {
-        public int id { get; set; }
-        public int EmpId { get; set; }
-        public int CourseId { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
+        public int OnboardingCourseId { get; set; }
+        public OnboardingCourse OnboardingCourse { get; set; }
+        [Required]
+        [Range(0, 100)]
         public int PercentCompleted { get; set; }
     }
 }

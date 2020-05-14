@@ -1,0 +1,32 @@
+﻿@model PagedList.IPagedList<coursework.Models.TimeTracker>
+<div style="margin: 15px">
+
+    <h2>Tracked time</h2>
+
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Project ID</th>
+            <th>Hours</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalHours)
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+
+
+</div>

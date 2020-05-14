@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using coursework.Interfaces.Repos;
@@ -29,7 +30,12 @@ namespace coursework.Repositories
         public void UpdateProject(Project project)
         {
             if (project == null) return;
-            Context.Projects.AddOrUpdate(project);
+            var entry = Get(project.Id);
+            if (entry == null) return;
+            entry.Name = project.Name;
+            entry.Description = project.Description;
+            entry.ClientName = project.ClientName;
+            Context.Entry(entry).State = EntityState.Modified;
             SaveChanges();
         }
 

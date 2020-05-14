@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course work</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="@Url.Action("Index")" data-abc="true">Knowledge base</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"> <a class="nav-link" href="@Url.Action("Index")" data-abc="true">Employees <span class="sr-only">(current)</span></a> </li>
+                <li class="nav-item"> <a class="nav-link" href="@Url.Action("Positions")" data-abc="true">Current positions</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="@Url.Action("Projects")" data-abc="true">Current projects</a> </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Documents
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Corporate rules</a>
+                        <a class="dropdown-item" href="#">Important docs</a>
+                    </div>
+                </li>
+            </ul>
+            @using (Html.BeginForm("Search", "KnowledgeBase", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+            {
+                @Html.TextBox("search", string.Empty, new { @class = "form-control mr-sm-2", @placeholder = "Search" })
+                <input type="submit" name="submit" value="Search" class="btn btn-secondary my-2 my-sm-0" />
+            }
+            <a href="@Url.Action("LogOff", "Account")">
+                <img style="margin-left: 15px;" src="~/Content/poweroff.png" width="25" height="25" alt=""/></a>
+        </div>
+    </nav>
+    @RenderBody()
+
+    @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css")
+    @Scripts.Render("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+</body>
+</html>
